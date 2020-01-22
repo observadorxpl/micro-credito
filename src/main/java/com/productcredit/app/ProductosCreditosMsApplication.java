@@ -1,4 +1,4 @@
-package com.productocredito.app;
+package com.productcredit.app;
 
 import java.util.Date;
 
@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 
-import com.productocredito.app.models.ProductoCredito;
-import com.productocredito.app.models.TipoProducto;
-import com.productocredito.app.repository.IProductoCreditoRepository;
-import com.productocredito.app.repository.ITipoProductoRepository;
+import com.productcredit.app.models.CreditProduct;
+import com.productcredit.app.models.CreditProductType;
+import com.productcredit.app.repository.ICreditProductRepository;
+import com.productcredit.app.repository.ICreditProductTypeRepository;
 
 import reactor.core.publisher.Flux;
 @EnableEurekaClient
@@ -22,29 +22,29 @@ public class ProductosCreditosMsApplication implements CommandLineRunner{
 	private ReactiveMongoTemplate template;
 	
 	@Autowired
-	private IProductoCreditoRepository productoRepo;
+	private ICreditProductRepository productRepo;
 	@Autowired
-	private ITipoProductoRepository tipoProductoRepo;
+	private ICreditProductTypeRepository productTypeRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProductosCreditosMsApplication.class, args);
 	}
 	@Override
 	public void run(String... args) throws Exception {
-		template.dropCollection(ProductoCredito.class).subscribe();
-		template.dropCollection(TipoProducto.class).subscribe();
+		template.dropCollection(CreditProduct.class).subscribe();
+		template.dropCollection(CreditProductType.class).subscribe();
 		// REGISTRO DE TIPO DE PRODUCTOS Y PRODUCTOS
 		
-		TipoProducto tipP2 = new TipoProducto("Creditos");
+		CreditProductType tipP2 = new CreditProductType("Creditos");
 		Flux.just(tipP2)
-		.flatMap(tipP -> tipoProductoRepo.save(tipP))
+		.flatMap(tipP -> productTypeRepo.save(tipP))
 		.thenMany(
-				Flux.just(new ProductoCredito("Personal", new Date(), 0.09, tipP2),
-						new ProductoCredito("Empresarial",  new Date(), 0.1, tipP2),
-						new ProductoCredito("Tarjeta de credito", new Date(),0.15, tipP2),
-						new ProductoCredito("Adelanto Efectivo", new Date(),0.15, tipP2)
+				Flux.just(new CreditProduct("Personal", new Date(), 0.09, tipP2),
+						new CreditProduct("Empresarial",  new Date(), 0.1, tipP2),
+						new CreditProduct("Tarjeta de credito", new Date(),0.15, tipP2),
+						new CreditProduct("Adelanto Efectivo", new Date(),0.15, tipP2)
 						)
-				).flatMap(pro -> productoRepo.save(pro))
+				).flatMap(pro -> productRepo.save(pro))
 		.subscribe(res -> System.out.println("Producto".concat(res.toString().concat(" " + "Registrado"))));
 	}
 }

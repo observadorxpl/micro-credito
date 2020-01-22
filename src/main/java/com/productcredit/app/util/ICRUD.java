@@ -1,4 +1,4 @@
-package com.productocredito.app.util;
+package com.productcredit.app.util;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

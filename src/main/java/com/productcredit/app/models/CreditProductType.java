@@ -1,4 +1,4 @@
-package com.productocredito.app.models;
+package com.productcredit.app.models;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -6,26 +6,25 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Document
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
 @ToString
-public class TipoProducto {
+public class CreditProductType {
 	@Id
-	private String idTipoProducto;
+	private String idProductType;
 
 	@NotEmpty
-	private String descripcion;
+	private String description;
 
-	public TipoProducto(@NotEmpty String descripcion) {
+	public CreditProductType(@NotEmpty String description) {
 		super();
-		this.descripcion = descripcion;
+		this.description = description;
 	}
 	
 }

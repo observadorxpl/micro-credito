@@ -1,36 +1,36 @@
-package com.productocredito.app.business;
+package com.productcredit.app.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.productocredito.app.models.ProductoCredito;
-import com.productocredito.app.repository.IProductoCreditoRepository;
+import com.productcredit.app.models.CreditProduct;
+import com.productcredit.app.repository.ICreditProductRepository;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 @Service
-public class ProductoServiceImpl implements IProductoService{
+public class CreditProductImpl implements ICreditProductService{
 
 	@Autowired
-	private IProductoCreditoRepository productoRepo;
+	private ICreditProductRepository productoRepo;
 	
 	@Override
-	public Flux<ProductoCredito> findAll() {
+	public Flux<CreditProduct> findAll() {
 		return productoRepo.findAll();
 	}
 
 	@Override
-	public Mono<ProductoCredito> finById(String id) {
+	public Mono<CreditProduct> finById(String id) {
 		return productoRepo.findById(id);
 	}
 
 	@Override
-	public Mono<ProductoCredito> save(ProductoCredito t) {
+	public Mono<CreditProduct> save(CreditProduct t) {
 		return productoRepo.save(t);
 	}
 
 	@Override
-	public Mono<Void> delete(ProductoCredito t) {
+	public Mono<Void> delete(CreditProduct t) {
 		return productoRepo.delete(t);
 	}
 
