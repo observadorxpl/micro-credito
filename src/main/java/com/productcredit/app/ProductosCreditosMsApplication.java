@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,6 +19,7 @@ import com.productcredit.app.repository.ICreditProductRepository;
 import com.productcredit.app.repository.ICreditProductTypeRepository;
 
 import reactor.core.publisher.Flux;
+@EnableCircuitBreaker
 @EnableEurekaClient
 @SpringBootApplication
 public class ProductosCreditosMsApplication implements CommandLineRunner{
@@ -37,6 +39,7 @@ public class ProductosCreditosMsApplication implements CommandLineRunner{
 	}
 	@Override
 	public void run(String... args) throws Exception {
+		/*
 		template.dropCollection(CreditProduct.class).subscribe();
 		template.dropCollection(CreditProductType.class).subscribe();
 		// REGISTRO DE TIPO DE PRODUCTOS Y PRODUCTOS
@@ -97,7 +100,7 @@ public class ProductosCreditosMsApplication implements CommandLineRunner{
 			return productRepo
 					.save(new CreditProduct("Adelanto Efectivo", new Date(), 0.15, 12, tipP2, pro.getBank()));
 		}).subscribe();
-		/*
+
 		.thenMany(
 				Flux.just(new CreditProduct("Personal", new Date(), 0.09, tipP2),
 						new CreditProduct("Empresarial",  new Date(), 0.1, tipP2),
